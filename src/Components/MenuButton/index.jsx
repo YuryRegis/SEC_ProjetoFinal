@@ -2,9 +2,9 @@ import React from 'react'
 import * as Styled from './style'
 
 
-function MenuButton({children}) {
+function MenuButton({onClick, children}) {
     return (
-        <Styled.Button isSelected>
+        <Styled.Button onClick={onClick} isSelected>
             <Styled.Text isSelected>
                 {children}
             </Styled.Text>

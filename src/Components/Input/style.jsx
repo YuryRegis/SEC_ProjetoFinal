@@ -21,6 +21,8 @@ export const Label = styled.text`
     font-size: ${theme.font.size.text};
     color: ${theme.color.text.primary};
 
+    width: 50px;
+
     margin-right: 9px;
 `
 
