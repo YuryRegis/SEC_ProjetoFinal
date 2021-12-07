@@ -1,7 +1,10 @@
 import * as Styled from './style'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import gif from '../../assets/images/loading.gif'
-const { dialog } = require('electron')
+import Button from '../../Components/Button'
+import Input from '../../Components/Input'
+
+//const { dialog } = require('electron')
 
 //const {ipcRenderer} = require('electron')
 
@@ -15,19 +18,23 @@ function Generator() {
     }
 
     function handleGetFile(){
-        dialog.showOpenDialog({
-            properties: ['openFile']
-        }, (files) => {
-            if(files) {
-                console.log(files[0])
-            }
-        })
+        //dialog.showOpenDialog({
+        //    properties: ['openFile']
+        //}, (files) => {
+        //    if(files) {
+        //        console.log(files[0])
+        //    }
+        //})
        // ipcRenderer.send('open-file-dialog')
     }
 
    // ipcRenderer.on('selected-file', (event, path) => {
    //     return setFilePath(filePath => path)
   //  })
+
+  useEffect(()=>{
+      console.log(loading)
+  },[loading])
 
     return (
         <Styled.Container>
@@ -37,21 +44,16 @@ function Generator() {
             <Styled.Text>Para gerar uma hash do seu arquivo, importe-o para o programa.</Styled.Text>
 
             <Styled.InputArea>
-                <Styled.InputContainer>
-                    
-                    <Styled.Label>Arquivo:</Styled.Label>
+                
+                <Input
+                    label='Arquivo' 
+                    placeholder='~\diretorio\do\arquivo'
+                    onChange={e => setFilePath(e.target.value)}
+                    value={filePath}
+                />
 
-                    <Styled.Input 
-                        placeholder='~\diretorio\do\arquivo'
-                        onChange={setFilePath}
-                        value={filePath}
-                    />
-
-                </Styled.InputContainer>
-
-                <Styled.Button onClick={handleGetFile}>
-                    <Styled.Text>Localizar</Styled.Text>
-                </Styled.Button>
+                <Button onClick={handleGetFile} label='Localizar' />
+                
             </Styled.InputArea>
 
             <Styled.Canvas>
@@ -63,9 +65,7 @@ function Generator() {
                   </> }
             </Styled.Canvas>
 
-            <Styled.Button onClick={handleGenerate}>
-                    <Styled.Text>Gerar Hash</Styled.Text>
-            </Styled.Button>
+            <Button onClick={handleGenerate} label='Gerar Hash'/>
 
         </Styled.Container>
     )

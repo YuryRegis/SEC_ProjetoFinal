@@ -23,11 +23,6 @@ export const Text = styled.text`
         : theme.font.size.text };
 `
 
-export const InputContainer = styled.div`
-    display: inline-flex;
-    align-items: center;
-`
-
 export const InputArea = styled.div`
     display: inline-flex;
     width: 100%;
@@ -35,22 +30,6 @@ export const InputArea = styled.div`
     margin: 16px 0;
     align-items: center;
     justify-content: space-between;
-`
-
-export const Label = styled.text`
-    font-family: ${theme.font.family.primary};
-    font-size: ${theme.font.size.text};
-    color: ${theme.color.text.primary};
-
-    margin-right: 9px;
-`
-
-export const Input = styled.input`
-    height: 23px;
-    width: 40vw;
-
-    border-radius: 9px;
-    background-color: ${theme.color.input.background};
 `
 
 export const Canvas = styled.div`
@@ -68,21 +47,4 @@ export const LoadingImage = styled.img`
     height: 170px;
     width: 170px;
     border-radius: 50px;
-`
-
-export const Button = styled.button`
-    height: 35px;
-    width: 100px;
-
-    border-radius: 9px;
-
-    background-color: ${theme.color.button.background.secondary};
-`
-
-export const TextButton = styled.text`
-    font-family: ${theme.font.family.primary};
-    font-size: ${theme.font.size.button};
-    font-weight: bold;
-
-    color: ${theme.color.button.text.primary}
 `
