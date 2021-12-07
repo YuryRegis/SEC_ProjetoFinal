@@ -27,7 +27,7 @@ export const InputArea = styled.div`
     display: inline-flex;
     width: 100%;
     
-    margin: 16px 0;
+    margin: 30px 0 0 0;
     align-items: center;
     justify-content: space-between;
 `

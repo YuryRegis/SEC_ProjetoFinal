@@ -14,7 +14,7 @@ export const Title = styled.h1`
 `
 
 export const Text = styled.text`
-    margin-bottom: 8px;
+    margin-bottom: 18px;
     font-family: ${theme.font.family.primary};
     color: ${theme.color.text.primary};
 
@@ -27,7 +27,7 @@ export const InputArea = styled.div`
     display: inline-flex;
     width: 100%;
     
-    margin: 16px 0;
+    margin: 30px 0 0 0;
     align-items: center;
     justify-content: space-between;
 `
