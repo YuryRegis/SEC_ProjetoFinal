@@ -4,9 +4,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+### Build exe from project
+
+$ electron-packager <sourcedir> <appname> --platform=win32 --arch=x86_64
+
 In the project directory, you can run:
 
-### `yarn start`
+### `yarn start` 
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
