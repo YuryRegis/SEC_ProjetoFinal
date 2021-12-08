@@ -1,74 +1,73 @@
-# Getting Started with Create React App
+# HDT - HASH DEVELOPER TOOL 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este projeto-desafio teve como finalidade alinhar os estudos adquiridos em sala de aula, para entrega do trabalho avaliativo de conclusão da disciplina "Segurança e Criptografia de Dados", do curso de Ciência da Computação, da Universidade Católica de Minas Gerais (PUC-MG), unidade de Poços de Caldas/MG, tendo como orientador o professor João Benedito dos Santos Junior. 
 
-## Available Scripts
+<hr style="border:2px solid gray"> </hr>
 
-### Build exe from project
+## Objetivos:
+- Gerar uma aplicação/ferramenta, de fácil manuseio, que auxilie nas tarefas de análise forense, à fim de aplicar o conhecimento adquiridos em sala de aula;
+- Alinhar os conhecimentos adquiridos no seminário de React, ofertado na semana da Ciência da Computação, com o conteúdo da disciplina de "Segurança e Criptografia de Dados";
+- Transformar uma aplicação Web em uma aplicação desktop; 
 
-$ electron-packager <sourcedir> <appname> --platform=win32 --arch=x86_64
+## Desafio proposto:
+Gerar uma aplicação de interface gráfica que possibilite um usuário a realizar tarefas rotineiras sem o uso de comandos no terminal. Dentre os recursos que pretende-se implementar na aplicação destacam-se:
+    - Gerar uma hash a partir de um arquivo ou diretório do mesmo;
+    - Verificar se uma hash é válida ou não;
 
-In the project directory, you can run:
+## Desafios futuros:
+Dentre os recursos que pretende-se implementar em versões futuras, destacam-se:
+    - Listar dispositivos Android conectados ao computador;
+    - Realizar extração de arquivos de um dispositivo Android selecionado;
 
-### `yarn start` 
+ 
+<p align="center">
+  <img src="https://i.ibb.co/sHwnXz9/HASHDEVTOOL.png">
+</p>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Gerador de Hash
+Nesta tela o usuário será capaz de gerar uma hash SHA256 de um arquivo, passando sua referência local (diretório) ou selecionando o mesmo através de uma caixa de diálogo nativa do seu sistema operacional;
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Verificador de Hash
+Nesta tela o usuário será capaz de validar uma hash SHA256 de um arquivo, passando sua referência local (diretório) ou selecionando o mesmo através de uma caixa de diálogo nativa do seu sistema operacional;
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<hr style="border:2px solid gray"> </hr>
 
-### `yarn build`
+## Instruções para gerar Build:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Antes de iniciar o processo de build, instale as dependências do projeto com o gerenciador de pacotes yarn ou npm. \
+Na raiz do projeto, abra o terminal e execute o comando:
+```$ yarn```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Windows
+Na raiz do projeto, abra o terminal e execute o comando:
+```$ yarn build```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Linux
+Em breve...
 
-### `yarn eject`
+### MacOS
+Em breve...
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Instruções para gerar aplicação executável [Documentação](https://www.electron.build/cli):
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Certifique-se que já tenha realizado o build do projeto antes de executar os comandos abaixo. \
+Uma pasta com o nome da aplicação será criada na raiz do diretório aberto no terminal.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Windows 
+Abra o terminal na pasta de destino da aplicação e execute o comando:
+```$ electron-packager <diretorio-do-projeto> <nome-do-app> --platform=win32 --arch=x64```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Linux
+Abra o terminal na pasta de destino da aplicação e execute o comando:
+```$ electron-packager <diretorio-do-projeto> <nome-do-app> --platform=linux```
 
-## Learn More
+## MacOS
+Abra o terminal na pasta de destino da aplicação e execute o comando:
+```$ electron-packager <diretorio-do-projeto> <nome-do-app> --platform=darwin```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### DOWNLOAD (v0.1.0)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Windows   [Google Drive]()
+- Linux     [Google Drive]()
+- MacOS     [Google Drive]()
