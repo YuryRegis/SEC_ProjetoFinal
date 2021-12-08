@@ -1,12 +1,16 @@
 const OS = require('os')
 const fs = require('fs')
+const url = require('url')
+const path = require("path")
 const crypto = require('crypto')
+const isDev = require("electron-is-dev")
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
+
 
 process.setMaxListeners(20);
 
 function createWindow() {
-    const appWindow = new BrowserWindow({
+    let appWindow = new BrowserWindow({
         width:800,
         height:600,
         resizable: false,
@@ -19,7 +23,15 @@ function createWindow() {
         }
     })
 
-    appWindow.loadURL('http://localhost:3000')
+    //appWindow.loadURL( isDev 
+    //    ? 'http://localhost:3000'
+    //    : `file://${path.join(__dirname, '/resources/app/build/index.html')}`)
+
+    appWindow.loadURL(url.format({
+        pathname: path.join(__dirname, './build/index.html'),
+        protocol: 'file',
+        slashes: true
+    }))
 
     ipcMain.on('open-file-dialog', (event) => {
         const isMacOs = OS.platform() === 'darwin'
@@ -48,8 +60,10 @@ function createWindow() {
             event.sender.send('invalid-path', message)
         }
     })
+
+    appWindow.on('closed', () => appWindow = null)
 }
 
-ipcMain.on('close-main-window', () => app.quit())
+ipcMain.on('close-main-window', () => OS.platform!=='darwin' && app.quit())
 
 app.on('ready', createWindow) 
