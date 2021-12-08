@@ -7,7 +7,11 @@ export const theme = {
         },
         text: {
             primary: '#c9c9c9',
-            secondary: '#993399'
+            secondary: '#993399',
+        },
+        title: {
+            primary: '#993399',
+            secondary: '#ba1e69',
         },
         button: {
             background: {

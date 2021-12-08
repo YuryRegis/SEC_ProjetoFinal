@@ -10,7 +10,10 @@ export const Title = styled.h1`
     margin-bottom: 10px;
 
     font-family: ${theme.font.family.primary};
-    color: ${theme.color.text.secondary};
+    color: ${({alternative}) => alternative 
+        ? theme.color.title.secondary
+        : theme.color.title.primary
+    };
 `
 
 export const Text = styled.text`
