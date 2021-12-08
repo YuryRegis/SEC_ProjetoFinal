@@ -1,37 +1,66 @@
 import * as Styled from './style'
 import React, {useEffect, useState} from 'react'
-import gif from '../../assets/images/loading.gif'
+import gifSearch from '../../assets/images/loading.gif'
+import gifError from '../../assets/images/error.gif'
 import Button from '../../Components/Button'
 import Input from '../../Components/Input'
+import ResetListeners from '../../utils/resetListeners'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-//const { dialog } = require('electron')
 
-//const {ipcRenderer} = require('electron')
-
+const {ipcRenderer} = window.require('electron')
 
 function Generator() {
     const [loading, setLoading] = useState(false)
+    const [isError, setIsError] = useState(false)
     const [filePath, setFilePath] = useState('')
+    const [lastUpdate, setLastUpdate] = useState('.')
+    const [hash, setHash] = useState('')
 
     function handleGenerate() {
-        setLoading(loading => !loading)
+        if(filePath === '') {
+            setIsError(_ => true)
+            return toast.error('Opa! Existe algum campo vazio?')
+        }
+        if (filePath === lastUpdate) 
+            return
+            
+        setLoading(loading => true)
+        ipcRenderer.send('generate-hash', filePath)
     }
 
-    function handleGetFile(){
-        //dialog.showOpenDialog({
-        //    properties: ['openFile']
-        //}, (files) => {
-        //    if(files) {
-        //        console.log(files[0])
-        //    }
-        //})
-       // ipcRenderer.send('open-file-dialog')
+    function handleGetFile() {
+       ipcRenderer.send('open-file-dialog')
     }
 
-   // ipcRenderer.on('selected-file', (event, path) => {
-   //     return setFilePath(filePath => path)
-  //  })
+    useEffect(() => {
+        ResetListeners()
+        ipcRenderer.on('encrypted-hash', (_, arg) => setHash(_ => arg))
 
+        ipcRenderer.on('selected-file', (_, path) => setFilePath(_ => path))
+
+        ipcRenderer.on('invalid-path', (_, message) => {
+            setLoading(_ => false)
+            setIsError(_ => true)
+            toast.error(message)
+        })
+    },[])
+
+    useEffect(() => {
+        if(isError)
+            setTimeout(()=>{
+                setIsError(_ => false)
+            },5000)      
+    }, [isError])
+
+    useEffect(() => {
+        setLastUpdate(filePath)
+        setTimeout(()=>{
+            setLoading(loading => false)
+        }, 2000)
+    }, [hash])
+   
     return (
         <Styled.Container>
             
@@ -54,14 +83,24 @@ function Generator() {
 
             <Styled.Canvas>
                 { loading 
-                ? <Styled.LoadingImage src={gif}/>
+                ? <Styled.LoadingImage src={gifSearch}/>
+                : isError 
+                ? <Styled.LoadingImage src={gifError}/>
+                : (hash==='') 
+                ? (<React.Fragment/>) 
                 : <>
                     <Styled.Text>HASH:</Styled.Text>
-                    <Styled.Text size={'12px'}>2e966c4fffeab1ac7126acbb2413cfa315d9915cb0bb2959a2145dfa5511cef4</Styled.Text>
+                    <Styled.Text size={'12px'}>{hash}</Styled.Text>
                   </> }
             </Styled.Canvas>
 
             <Button onClick={handleGenerate} label='Gerar Hash'/>
+
+            <ToastContainer
+                position="bottom-left"
+                theme='dark'
+                limit={1}
+            />
 
         </Styled.Container>
     )
