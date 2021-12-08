@@ -35,7 +35,7 @@ export const InputArea = styled.div`
 export const Canvas = styled.div`
     display: flex;
     flex-direction: column;
-    height: 170px;
+    height: 180px;
     width: 100%;
     
     justify-content: center;
@@ -44,6 +44,8 @@ export const Canvas = styled.div`
 `
 
 export const LoadingImage = styled.img`
+    margin-top: 9px;
+
     height: 170px;
     width: 170px;
     border-radius: 50px;
