@@ -75,6 +75,6 @@ Abra o terminal na pasta de destino da aplicação e execute o comando: \
 
 ### DOWNLOAD (v0.1.0)
 
-- Windows   [Google Drive]()
-- Linux     [Google Drive]()
+- Windows   [Google Drive](https://drive.google.com/file/d/1xEOeWJ-h20Fy84lEafvyaFNINv76xO4l/view?usp=sharing)
+- Linux     [Google Drive](https://drive.google.com/file/d/1SAIEZ9XLW33IGVcAHzNRpdGptjtrlDUs/view?usp=sharing)
 - MacOS     [Google Drive]()
