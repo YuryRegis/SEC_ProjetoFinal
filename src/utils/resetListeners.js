@@ -1,10 +1,15 @@
 const {ipcRenderer} = window.require('electron')
 
 
+const listeners = [
+    'encrypted-hash',
+    'invalid-path',
+    'selected-file',
+    'adb-info-response',
+]
+
 function resetAllListeners() {
-    resetListener('encrypted-hash')
-    resetListener('selected-file')
-    resetListener('invalid-path')
+    listeners.map(listener => resetListener(listener))
 }
 
 function resetListener(channel){
