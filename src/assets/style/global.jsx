@@ -50,12 +50,13 @@ export const theme = {
     font: {
         family: {
             primary: 'Roboto',
-            secondary: 'Fira Sans'
+            secondary: 'Bahnschrift'
         },
         size: {
             text: '.9rem',
             button: '1rem',
             menuButton: '1.1rem',
+            monitor: '.75rem',
             input: '.9rem',
         }
     },
