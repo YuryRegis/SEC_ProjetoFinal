@@ -21,6 +21,9 @@ export const Content = styled.div`
     background-color: ${theme.color.background.secondary};
     height: 100%;
     width: 75vw;
+
+    overflow-y: hidden;
+    overflow-x: hidden;
 `
 
 export const ButtonContainer = styled.div`
