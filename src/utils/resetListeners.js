@@ -5,7 +5,9 @@ const listeners = [
     'encrypted-hash',
     'invalid-path',
     'selected-file',
-    'adb-info-response',
+    'monitor-response',
+    'throw-success',
+    'throw-error'
 ]
 
 function resetAllListeners() {

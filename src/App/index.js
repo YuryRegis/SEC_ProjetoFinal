@@ -3,6 +3,7 @@ import * as Styled from './style'
 import MenuButton from '../Components/MenuButton'
 import Generator from '../Pages/Generator'
 import Checker from '../Pages/Checker'
+import Android from '../Pages/Android'
 
 
 function handlePage(page) {
@@ -11,6 +12,8 @@ function handlePage(page) {
       return (<Generator/>)
     case 'checker':
       return (<Checker />)
+    case 'android':
+      return (<Android />)
   }
 }
 
@@ -29,7 +32,7 @@ function App() {
         <Styled.ButtonContainer>
           <MenuButton onClick={()=>handleButtonClick('generator')}>Gerar hash</MenuButton>
           <MenuButton onClick={()=>handleButtonClick('checker')}>Comparar hash</MenuButton>
-          <MenuButton >Coletar dados</MenuButton>
+          <MenuButton onClick={()=>handleButtonClick('android')}>Android tools</MenuButton>
         </Styled.ButtonContainer>
      </Styled.Menu>
      

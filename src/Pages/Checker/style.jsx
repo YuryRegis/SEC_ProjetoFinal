@@ -2,6 +2,8 @@ import styled from 'styled-components'
 import theme from '../../assets/style/global'
 
 
+const { innerHeight } = window
+
 export const Container = styled.div`
     padding: 0 16px;
 `
@@ -38,9 +40,9 @@ export const InputArea = styled.div`
 export const Canvas = styled.div`
     display: flex;
     flex-direction: column;
-    height: 180px;
+    height: ${innerHeight/1.9}px;
     width: 100%;
-    
+
     justify-content: center;
     align-items: center;
     overflow: hidden;
