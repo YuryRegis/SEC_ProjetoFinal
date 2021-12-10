@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import theme from '../../assets/style/global'
 
 
+const { innerHeight, innerWidth } = window
 
 export const InputContainer = styled.div`
     display: inline-flex;
@@ -9,11 +10,11 @@ export const InputContainer = styled.div`
 `
 
 export const Input = styled.input`
-height: 23px;
-width: 40vw;
+    height: ${innerHeight/19}px;
+    width: 44vw;
 
-border-radius: 9px;
-background-color: ${theme.color.input.background};
+    border-radius: 9px;
+    background-color: ${theme.color.input.background};
 `
 
 export const Label = styled.text`
