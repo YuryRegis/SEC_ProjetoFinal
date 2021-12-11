@@ -79,7 +79,7 @@ function Checker() {
     return (
         <Styled.Container>
             
-            <Styled.Title>Verificador de Hash</Styled.Title>
+            <Styled.Title>Verificador de Hash (arquivo único)</Styled.Title>
 
             <Styled.Text>Para verificar uma hash do seu arquivo, entre com a chave hash e importe o respectivo arquivo para o programa.</Styled.Text>
 
