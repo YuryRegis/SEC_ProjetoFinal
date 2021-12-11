@@ -29,15 +29,6 @@ function Android() {
         } else return true
     }
 
-    function handleGenerate() {
-        if(!hasDir())
-            return
-        if (filePath === lastUpdate) 
-            return 
-        setLoading(_ => true)
-        ipcRenderer.send('generate-hash', filePath)
-    }
-
     function handleGetDir(){
         ipcRenderer.send('open-dir-dialog')
     }
@@ -75,16 +66,18 @@ function Android() {
             return
         setLoading(_ => true)
         const path = `${filePath.replace(/\\/g,'/')}/${label}`
-        console.log('PATH',path)
         ipcRenderer.send('write-file', {path, content: textMonitor}) 
     }
 
     
     useEffect(() => {
         ResetListeners()
+
+        ipcRenderer.send('adb-try-connect')
+
         ipcRenderer.on('encrypted-hash', (_, arg) => setHash(_ => arg))
 
-        ipcRenderer.on('selected-file', (_, path) => setFilePath(_ => path))
+        ipcRenderer.on('selected-dir', (_, path) => setFilePath(_ => path))
 
         ipcRenderer.on('invalid-path', (_, message) => {
             setLoading(_ => false)

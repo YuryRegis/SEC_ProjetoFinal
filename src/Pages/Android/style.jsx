@@ -4,8 +4,6 @@ import theme from '../../assets/style/global'
 
 const { innerWidth, innerHeight } = window
 
-console.log("H",innerHeight)
-
 export const Container = styled.div`
     padding: 0 16px;
 `

@@ -11,45 +11,55 @@ import 'react-toastify/dist/ReactToastify.css'
 
 const {ipcRenderer} = window.require('electron')
 
-function Checker() {
+function HdtChecker() {
     const [isError, setIsError] = useState(false)
     const [loading, setLoading] = useState(false)
     const [lastUpdate, setLastUpdate] = useState('.')
-    const [hashInput, setHashInput] = useState('')
+    const [destiny, setDestiny] = useState('')
     const [filePath, setFilePath] = useState('')
     const [hash, setHash] = useState('')
     const [result, setResult] = useState('')
 
 
     function handleGenerate() {
-        if(filePath==='' || hashInput==='') {
+        if(filePath==='' || destiny==='') {
             setIsError(_ => true)
             return toast.error('Opa! Existe algum campo vazio?')
         }
         if (filePath === lastUpdate) 
             return 
         setLoading(_ => true)
-        ipcRenderer.send('generate-hash', filePath)
+        setTimeout(()=>ipcRenderer.send('generate-bulk-hash',
+         {path:filePath, destiny}), 2000)
     }
 
     function handleGetFile(){
-        ipcRenderer.send('open-file-dialog')
+        ipcRenderer.send('open-file-dialog', ['txt'])
     }
 
-    function checkHashFile() {
-        const check = hash === hashInput
-        if (check)
-            return 'HASH VÁLIDA'
-        else 
-            return 'OPA! HASH INVÁLIDA'
+    function handleGetDir(){
+        ipcRenderer.send('open-dir-dialog')
     }
 
     useEffect(() => {
         ResetListeners()
         ipcRenderer.on('encrypted-hash', (_, arg) => setHash(_ => arg))
 
-        ipcRenderer.on('selected-dir', (_, path) => setFilePath(_ => path))
+        ipcRenderer.on('selected-file', (_, path) => setFilePath(_ => path))
 
+        ipcRenderer.on('selected-dir', (_, path) => setDestiny(_ => path))
+
+        ipcRenderer.on('throw-success', (_,arg) => toast.success(arg))
+        
+        ipcRenderer.on('throw-end', () => setLoading(_ => false)) 
+
+        ipcRenderer.on('write-data', (_, arg) => ipcRenderer.send('write-file', arg))
+        
+        ipcRenderer.on('throw-error', (_,arg) => { 
+            toast.error(arg)
+            setLoading(_ => false) 
+        })
+        
         ipcRenderer.on('invalid-path', (_, message) => {
             setLoading(_ => false)
             setIsError(_ => true)
@@ -66,28 +76,25 @@ function Checker() {
 
     useEffect(() => {
         setLastUpdate(filePath)
-        setResult(_ => checkHashFile())
+        
         setTimeout(()=>{
             setLoading(_ => false)
         }, 2000)
     }, [hash])
 
-    useEffect(() => {
-        setResult(_ => '')
-    },[hashInput])
 
     return (
         <Styled.Container>
             
-            <Styled.Title>Verificador de Hash</Styled.Title>
+            <Styled.Title>Verificador Hash Developer Tool</Styled.Title>
 
-            <Styled.Text>Para verificar uma hash do seu arquivo, entre com a chave hash e importe o respectivo arquivo para o programa.</Styled.Text>
+            <Styled.Text>Para verificar hash de vários arquivos simultaneamente, importe o arquivo "hash.txt" gerado pela ferramenta Hash Developer Tool (HDT).</Styled.Text>
 
             <Styled.InputArea>
                 
                 <Input
                     label='Arquivo' 
-                    placeholder='~\diretorio\do\arquivo'
+                    placeholder='~\diretorio\do\arquivo\hash.txt'
                     onChange={e => setFilePath(e.target.value)}
                     value={filePath}
                 />
@@ -99,13 +106,13 @@ function Checker() {
             <Styled.InputArea>
                 
                 <Input
-                    label='Hash' 
-                    placeholder='SHA256'
-                    onChange={e => setHashInput(e.target.value)}
-                    value={hashInput}
+                    label='Destino' 
+                    placeholder='~\diretorio\de\destino'
+                    onChange={e => setDestiny(e.target.value)}
+                    value={destiny}
                 />
 
-                <Button onClick={handleGenerate} label='Verificar'/>
+                <Button onClick={handleGetDir} label='Localizar'/>
                 
             </Styled.InputArea>
 
@@ -116,6 +123,8 @@ function Checker() {
                 ? <Styled.LoadingImage src={gifError}/>
                 : <Styled.Title alternative>{result}</Styled.Title>}
             </Styled.Canvas>
+
+            <Button onClick={handleGenerate} label='Verificar HASH'/>
             
             <ToastContainer 
                 position="bottom-left"
@@ -126,4 +135,4 @@ function Checker() {
     )
 }
 
-export default Checker
+export default HdtChecker

@@ -2,6 +2,8 @@ import styled from 'styled-components'
 import theme from '../../assets/style/global'
 
 
+const { innerHeight } = window
+
 export const Container = styled.div`
     padding: 0 16px;
 `
@@ -17,6 +19,7 @@ export const Title = styled.h1`
 `
 
 export const Text = styled.text`
+    margin-bottom: 18px;
     font-family: ${theme.font.family.primary};
     color: ${theme.color.text.primary};
 
@@ -29,7 +32,7 @@ export const InputArea = styled.div`
     display: inline-flex;
     width: 100%;
     
-    padding: 30px 0 0 0;
+    margin: 30px 0 0 0;
     align-items: center;
     justify-content: space-between;
 `
@@ -37,17 +40,18 @@ export const InputArea = styled.div`
 export const Canvas = styled.div`
     display: flex;
     flex-direction: column;
-    height: 130px;
+    height: ${innerHeight/2.2}px;
     width: 100%;
-    
+
     justify-content: center;
     align-items: center;
     overflow: hidden;
 `
 
 export const LoadingImage = styled.img`
-    margin-top: 19px;
-    height: 120px;
-    width: 120px;
-    border-radius: 30px;
+    margin-top: 9px;
+
+    height: 170px;
+    width: 170px;
+    border-radius: 50px;
 `

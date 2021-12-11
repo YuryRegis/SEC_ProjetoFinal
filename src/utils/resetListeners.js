@@ -5,9 +5,13 @@ const listeners = [
     'encrypted-hash',
     'invalid-path',
     'selected-file',
+    'selected-dir',
+    'selected-destiny',
     'monitor-response',
+    'write-data',
     'throw-success',
-    'throw-error'
+    'throw-error',
+    'throw-end'
 ]
 
 function resetAllListeners() {
