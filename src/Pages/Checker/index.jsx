@@ -48,7 +48,7 @@ function Generator() {
         ResetListeners()
         ipcRenderer.on('encrypted-hash', (_, arg) => setHash(_ => arg))
 
-        ipcRenderer.on('selected-file', (_, path) => setFilePath(_ => path))
+        ipcRenderer.on('selected-dir', (_, path) => setFilePath(_ => path))
 
         ipcRenderer.on('invalid-path', (_, message) => {
             setLoading(_ => false)
