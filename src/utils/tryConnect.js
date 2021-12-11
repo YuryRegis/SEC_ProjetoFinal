@@ -13,8 +13,6 @@ function tryConnect(event) {
             const _error = error || stderr
             const message = 'Nenhum dispositivo detectado.'
             event.sender.send('throw-error', message)
-
-            console.log(_error)
         }
     })
 }
