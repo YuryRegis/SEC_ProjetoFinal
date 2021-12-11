@@ -7,6 +7,7 @@ const adb = require('./src/utils/adb')
 const isDev = require("electron-is-dev")
 const getDate = require('./src/utils/getDate')
 const listFilesDir = require('./src/utils/readDir')
+const tryConnect = require('./src/utils/tryConnect')
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 
 
@@ -73,11 +74,10 @@ function createWindow() {
         }
     })
 
-    ipcMain.on('generate-hash-dir', async(event, args) => {
-        const { path, destiny } = args
-        const FilesDir = await listFilesDir(path)
-        
+    ipcMain.on('generate-hash-dir', async(event, { path, destiny }) => {
         try {
+            const FilesDir = await listFilesDir(path)
+
             let buffer = ''
             FilesDir.map(dir => {
                 const _dir = dir.replace(/\\/g, '/')
@@ -92,6 +92,8 @@ function createWindow() {
             event.sender.send('throw-error', 'Verifique o diretório informado.')
         }
     })
+
+    ipcMain.on('adb-try-connect', (event) => tryConnect(event))
 
     ipcMain.on('adb-get-info', (event, _) => {
         const query = 'monitor-response'
