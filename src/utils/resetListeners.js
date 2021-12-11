@@ -10,7 +10,8 @@ const listeners = [
     'monitor-response',
     'write-data',
     'throw-success',
-    'throw-error'
+    'throw-error',
+    'throw-end'
 ]
 
 function resetAllListeners() {

@@ -4,6 +4,7 @@ import MenuButton from '../Components/MenuButton'
 import Generator from '../Pages/Generator'
 import Checker from '../Pages/Checker'
 import Android from '../Pages/Android'
+import HdtChecker from '../Pages/HdtChecker'
 
 
 function handlePage(page) {
@@ -14,6 +15,8 @@ function handlePage(page) {
       return (<Checker />)
     case 'android':
       return (<Android />)
+    case 'hdt-checker':
+      return (<HdtChecker />)
   }
 }
 
@@ -32,6 +35,7 @@ function App() {
         <Styled.ButtonContainer>
           <MenuButton onClick={()=>handleButtonClick('generator')}>Gerar hash</MenuButton>
           <MenuButton onClick={()=>handleButtonClick('checker')}>Comparar hash</MenuButton>
+          <MenuButton onClick={()=>handleButtonClick('hdt-checker')}>Comparador HDT</MenuButton>
           <MenuButton onClick={()=>handleButtonClick('android')}>Android tools</MenuButton>
         </Styled.ButtonContainer>
      </Styled.Menu>

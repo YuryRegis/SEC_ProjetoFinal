@@ -46,10 +46,13 @@ function createWindow() {
         dir.length > 0 && event.sender.send(channel, dir[0])
     })
 
-    ipcMain.on('open-file-dialog', (event) => {
+    ipcMain.on('open-file-dialog', (event, args) => {
         const isMacOs = OS.platform() === 'darwin'
-    
+        
         const file = dialog.showOpenDialogSync({
+            filters: args 
+            ? [{name: 'HDT File Text', extensions: [...args]}]
+            : [{name: 'All Files', extensions: ['*']}],
             properties: isMacOs 
                 ? ['openFile', 'openDirectory']
                 : ['openFile']
@@ -88,6 +91,32 @@ function createWindow() {
             const _destiny = `${destiny}/hash`
             event.sender.send('write-data', {path: _destiny, content: buffer})
         } catch(err) {
+            event.sender.send('throw-error', 'Algo de errado não está certo!')
+            event.sender.send('throw-error', 'Verifique o diretório informado.')
+        }
+    })
+
+    ipcMain.on('generate-bulk-hash', (event, {path, destiny}) => {
+        try {
+            let buffer = ''
+            const _path = path.replace(/\\/g,'/')
+            const _destiny = `${destiny.replace(/\\/g,'/')}/verified`
+            const data = fs.readFileSync(_path, 'utf8')
+            const textData = data.toString().split('\n')
+            textData.map(line => {
+                if(line==='') return
+                const lineWithoutBlank = line.replace(/\s/g,'')
+                const [dir, hash] = lineWithoutBlank.split(';')
+                const _file = fs.readFileSync(dir)
+                const _hash = crypto.createHash('sha256').update(_file).digest('hex')
+                if(hash !== _hash)
+                    buffer += `${dir}; REPROVADO: ${_hash}\n`
+                else
+                    buffer += `${dir}; APROVADO\n`
+            })
+            event.sender.send('throw-success', 'Arquivo lido com sucesso!')
+            event.sender.send('write-data', {path: _destiny, content: buffer}) 
+        } catch(error) {
             event.sender.send('throw-error', 'Algo de errado não está certo!')
             event.sender.send('throw-error', 'Verifique o diretório informado.')
         }
@@ -135,6 +164,8 @@ function createWindow() {
                 throw error
             })
             event.sender.send('throw-success', `Arquivo criado com sucesso!`)
+            event.sender.send('throw-end')
+
         } catch (error) {
             if(error?.code === 'EPERM') {
                 event.sender.send('throw-error', 'Sem permissão de escrita.')
