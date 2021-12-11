@@ -105,11 +105,10 @@ function createWindow() {
             const textData = data.toString().split('\n')
             textData.map(line => {
                 if(line==='') return
-                const lineWithoutBlank = line.replace(/\s/g,'')
-                const [dir, hash] = lineWithoutBlank.split(';')
+                const [dir, hash] = line.split(';')
                 const _file = fs.readFileSync(dir)
                 const _hash = crypto.createHash('sha256').update(_file).digest('hex')
-                if(hash !== _hash)
+                if(hash.replace(/\s/g,'') !== _hash)
                     buffer += `${dir}; REPROVADO: ${_hash}\n`
                 else
                     buffer += `${dir}; APROVADO\n`
