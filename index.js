@@ -6,6 +6,7 @@ const crypto = require('crypto')
 const adb = require('./src/utils/adb')
 const isDev = require("electron-is-dev")
 const getDate = require('./src/utils/getDate')
+const listFilesDir = require('./src/utils/readDir')
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 
 
@@ -23,22 +24,25 @@ function createWindow() {
         }
     })
 
+    // Fpr DEVELOP only
     appWindow.loadURL( isDev 
         ? 'http://localhost:3000'
         : `file://${path.join(__dirname, '/resources/app/build/index.html')}`)
 
+    // For PRODUCTION only
     //appWindow.loadURL(url.format({
     //    pathname: path.join(__dirname, './build/index.html'),
     //    protocol: 'file',
     //    slashes: true
     //}))
 
-    ipcMain.on('open-dir-dialog', (event) => {
+    ipcMain.on('open-dir-dialog', (event, arg) => {
         const dir = dialog.showOpenDialogSync({
             properties: ['openDirectory']
         })
         if(!dir) return
-        dir.length > 0 && event.sender.send('selected-file', dir[0])
+        const channel = arg || 'selected-dir'
+        dir.length > 0 && event.sender.send(channel, dir[0])
     })
 
     ipcMain.on('open-file-dialog', (event) => {
@@ -66,6 +70,26 @@ function createWindow() {
         } catch (error) {
             const message = 'Arquivo ou diretório inválido!'
             event.sender.send('invalid-path', message)
+        }
+    })
+
+    ipcMain.on('generate-hash-dir', async(event, args) => {
+        const { path, destiny } = args
+        const FilesDir = await listFilesDir(path)
+        
+        try {
+            let buffer = ''
+            FilesDir.map(dir => {
+                const _dir = dir.replace(/\\/g, '/')
+                const file = fs.readFileSync(_dir)
+                const hash = crypto.createHash('sha256').update(file).digest('hex')
+                buffer += `${_dir}; ${hash}\n`
+            })
+            const _destiny = `${destiny}/hash`
+            event.sender.send('write-data', {path: _destiny, content: buffer})
+        } catch(err) {
+            event.sender.send('throw-error', 'Algo de errado não está certo!')
+            event.sender.send('throw-error', 'Verifique o diretório informado.')
         }
     })
 
@@ -100,12 +124,9 @@ function createWindow() {
         adb(command, label, event, 'monitor-response', true)
     })
 
-    ipcMain.on('write-file', async (event, args) => {
+    ipcMain.on('write-file', async (event, {path, content}) => {
         const date = getDate()
-        const { path, content } = args
         const _path = `${path}_${date}.txt`
-
-        console.log('PATH$',_path)
 
         try {
             fs.writeFileSync(_path, content, (error) => {

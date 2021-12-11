@@ -17,7 +17,6 @@ export const Title = styled.h1`
 `
 
 export const Text = styled.text`
-    margin-bottom: 8px;
     font-family: ${theme.font.family.primary};
     color: ${theme.color.text.primary};
 
@@ -30,7 +29,7 @@ export const InputArea = styled.div`
     display: inline-flex;
     width: 100%;
     
-    margin: 30px 0 0 0;
+    padding: 30px 0 0 0;
     align-items: center;
     justify-content: space-between;
 `
@@ -38,7 +37,7 @@ export const InputArea = styled.div`
 export const Canvas = styled.div`
     display: flex;
     flex-direction: column;
-    height: 200px;
+    height: 130px;
     width: 100%;
     
     justify-content: center;
@@ -48,7 +47,7 @@ export const Canvas = styled.div`
 
 export const LoadingImage = styled.img`
     margin-top: 19px;
-    height: 170px;
-    width: 170px;
-    border-radius: 50px;
+    height: 120px;
+    width: 120px;
+    border-radius: 30px;
 `
