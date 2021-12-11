@@ -50,7 +50,7 @@ export const theme = {
     font: {
         family: {
             primary: 'Roboto',
-            secondary: 'Bahnschrift'
+            secondary: 'Fira Code'
         },
         size: {
             text: '.9rem',
