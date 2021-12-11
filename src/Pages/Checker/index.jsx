@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 const {ipcRenderer} = window.require('electron')
 
-function Generator() {
+function Checker() {
     const [isError, setIsError] = useState(false)
     const [loading, setLoading] = useState(false)
     const [lastUpdate, setLastUpdate] = useState('.')
@@ -126,4 +126,4 @@ function Generator() {
     )
 }
 
-export default Generator
+export default Checker
