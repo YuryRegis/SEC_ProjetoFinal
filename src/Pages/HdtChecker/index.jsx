@@ -57,6 +57,7 @@ function HdtChecker() {
         
         ipcRenderer.on('throw-error', (_,arg) => { 
             toast.error(arg)
+            setIsError(_ => true)
             setLoading(_ => false) 
         })
         
