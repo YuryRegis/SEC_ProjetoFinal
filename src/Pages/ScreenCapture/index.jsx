@@ -9,12 +9,17 @@ import ResetListeners from '../../utils/resetListeners'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+import successAudio from '../../assets/sounds/success.mp3'
+import errorAudio from '../../assets/sounds/error.mp3'
 
 const {ipcRenderer} = window.require('electron')
 
+
 function ScreenCapture() {
+    const [isSuccess, setIsSuccess] = useState(false)
     const [isError, setIsError] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [init, setInit] = useState(true)
     const [timer, setTimer] = useState(0)
     const [result, setResult] = useState('')
     const [destiny, setDestiny] = useState('')
@@ -49,11 +54,15 @@ function ScreenCapture() {
 
         ipcRenderer.on('selected-dir', (_, path) => setDestiny(_ => path))
 
-        ipcRenderer.on('throw-success', (_,arg) => toast.success(arg))
-        
         ipcRenderer.on('write-data', (_, arg) => ipcRenderer.send('write-file', arg))
         
         ipcRenderer.on('throw-end', () => setLoading(_ => false)) 
+        
+        ipcRenderer.on('throw-success', (_,arg) => {
+            toast.success(arg)
+            setIsError(_ => false)
+            setIsSuccess(_ => true)
+        })
         
         ipcRenderer.on('throw-error', (_,arg) => { 
             toast.error(arg)
@@ -69,10 +78,21 @@ function ScreenCapture() {
     },[])
 
     useEffect(() => {
-        if(isError)
+        if(isSuccess){
+            new Audio(successAudio).play()
+            setTimeout(()=>{
+                setIsSuccess(_ => false)
+            },5000)      
+        }
+    }, [isSuccess])
+
+    useEffect(() => {
+        if(isError) {
+            new Audio(errorAudio).play()
             setTimeout(()=>{
                 setIsError(_ => false)
             },5000)      
+        }
     }, [isError])
 
     useEffect(() => {

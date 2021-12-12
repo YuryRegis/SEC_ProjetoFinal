@@ -8,16 +8,16 @@ import ResetListeners from '../../utils/resetListeners'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+import successAudio from '../../assets/sounds/success.mp3'
+import errorAudio from '../../assets/sounds/error.mp3'
 
 const {ipcRenderer} = window.require('electron')
 
 function Android() {
     const [isError, setIsError] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [lastUpdate, setLastUpdate] = useState('.')
-    const [device, setDevice] = useState('')
+    const [isSuccess, setIsSuccess] = useState(false)
     const [filePath, setFilePath] = useState('')
-    const [hash, setHash] = useState('')
     const [textMonitor, setTextMonitor] = useState('')
     const [label, setLabel] = useState('')
 
@@ -75,8 +75,6 @@ function Android() {
 
         ipcRenderer.send('adb-try-connect')
 
-        ipcRenderer.on('encrypted-hash', (_, arg) => setHash(_ => arg))
-
         ipcRenderer.on('selected-dir', (_, path) => setFilePath(_ => path))
 
         ipcRenderer.on('invalid-path', (_, message) => {
@@ -100,23 +98,26 @@ function Android() {
 
         ipcRenderer.on('throw-success', (_, message) => {
             setLoading(_ => false)
-            setIsError(_ => true)
+            setIsError(_ => false)
+            setIsSuccess(_ => true)
             toast.success(message)
         })
         
     },[])
 
     useEffect(() => {
-        setLastUpdate(filePath)
-        //setResult(_ => checkHashFile())
-        setTimeout(()=>{
-            setLoading(_ => false)
-        }, 2000)
-    }, [hash])
+        if(isSuccess) {
+            new Audio(successAudio).play()
+            setTimeout(setIsSuccess(_ => false),3000)
+        }
+    },[isSuccess])
 
-    //useEffect(() => {
-    //    setResult(_ => '')
-    //},[hashInput])
+    useEffect(() => {
+        if(isError) {
+            new Audio(errorAudio).play()
+            setTimeout(setIsError(_ => false),3000)
+        }
+    },[isError])
 
     return (
         <Styled.Container>

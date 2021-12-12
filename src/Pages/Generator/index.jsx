@@ -9,10 +9,13 @@ import ResetListeners from '../../utils/resetListeners'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+import successAudio from '../../assets/sounds/success.mp3'
+import errorAudio from '../../assets/sounds/error.mp3'
 
 const {ipcRenderer} = window.require('electron')
 
 function Generator() {
+    const [isSuccess, setIsSuccess] = useState(false)
     const [loading, setLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [filePath, setFilePath] = useState('')
@@ -72,6 +75,7 @@ function Generator() {
 
         ipcRenderer.on('throw-success', (_, arg) => {
             toast.success(arg)
+            setIsSuccess(_ => true)
             setTimeout(_=>setLoading(_ => false), 4000)
         })
 
@@ -84,10 +88,19 @@ function Generator() {
 
     useEffect(() => {
         if(isError)
+            new Audio(errorAudio).play()
             setTimeout(()=>{
                 setIsError(_ => false)
             },5000)      
     }, [isError])
+
+    useEffect(() => {
+        if(isSuccess)
+            new Audio(successAudio).play()
+            setTimeout(()=>{
+                setIsSuccess(_ => false)
+            },5000)      
+    }, [isSuccess])
 
     useEffect(() => {
         setLastUpdate(filePath)

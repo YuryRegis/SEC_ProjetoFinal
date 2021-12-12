@@ -8,10 +8,14 @@ import ResetListeners from '../../utils/resetListeners'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+import successAudio from '../../assets/sounds/success.mp3'
+import errorAudio from '../../assets/sounds/error.mp3'
+
 
 const {ipcRenderer} = window.require('electron')
 
 function Checker() {
+    const [isSuccess, setIsSuccess] = useState(false)
     const [isError, setIsError] = useState(false)
     const [loading, setLoading] = useState(false)
     const [lastUpdate, setLastUpdate] = useState('.')
@@ -38,8 +42,10 @@ function Checker() {
 
     function checkHashFile() {
         const check = hash === hashInput
-        if (check)
+        setIsSuccess(_ => true)
+        if (check) {
             return 'HASH VÁLIDA'
+        }
         else 
             return 'OPA! HASH INVÁLIDA'
     }
@@ -58,7 +64,16 @@ function Checker() {
     },[])
 
     useEffect(() => {
+        if(isSuccess)
+            new Audio(successAudio).play()
+            setTimeout(()=>{
+                setIsSuccess(_ => false)
+            },5000)      
+    }, [isSuccess])
+
+    useEffect(() => {
         if(isError)
+            new Audio(errorAudio).play()
             setTimeout(()=>{
                 setIsError(_ => false)
             },5000)      
