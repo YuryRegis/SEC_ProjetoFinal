@@ -28,16 +28,16 @@ function createWindow() {
     })
 
     // Fpr DEVELOP only
-    appWindow.loadURL( isDev 
-        ? 'http://localhost:3000'
-        : `file://${path.join(__dirname, '/resources/app/build/index.html')}`)
+    //appWindow.loadURL( isDev 
+    //    ? 'http://localhost:3000'
+    //    : `file://${path.join(__dirname, '/resources/app/build/index.html')}`)
 
     // For PRODUCTION only
-    //appWindow.loadURL(url.format({
-    //    pathname: path.join(__dirname, './build/index.html'),
-    //    protocol: 'file',
-    //    slashes: true
-    //}))
+    appWindow.loadURL(url.format({
+        pathname: path.join(__dirname, './build/index.html'),
+        protocol: 'file',
+        slashes: true
+    }))
 
     ipcMain.on('open-dir-dialog', (event, arg) => {
         const dir = dialog.showOpenDialogSync({
