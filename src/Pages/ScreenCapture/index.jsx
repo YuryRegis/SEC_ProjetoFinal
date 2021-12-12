@@ -32,7 +32,8 @@ function ScreenCapture() {
             return toast.error('Informe o diretório de destino.')
         }
         setLoading(_ => true)
-        setTimer(_ => parseInt(timeLimit))
+        if(type==='recorder')
+            setTimer(_ => parseInt(timeLimit))
         const _destiny = destiny.replace(/\\/g, '/')
         ipcRenderer.send('screen-capture', {path: _destiny, timeLimit, type})
     }

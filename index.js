@@ -8,6 +8,8 @@ const isDev = require("electron-is-dev")
 const getDate = require('./src/utils/getDate')
 const listFilesDir = require('./src/utils/readDir')
 const tryConnect = require('./src/utils/tryConnect')
+const screenCapture = require('./src/utils/screenCapture')
+
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 
 
@@ -26,16 +28,16 @@ function createWindow() {
     })
 
     // Fpr DEVELOP only
-    //appWindow.loadURL( isDev 
-    //    ? 'http://localhost:3000'
-    //    : `file://${path.join(__dirname, '/resources/app/build/index.html')}`)
+    appWindow.loadURL( isDev 
+        ? 'http://localhost:3000'
+        : `file://${path.join(__dirname, '/resources/app/build/index.html')}`)
 
     // For PRODUCTION only
-    appWindow.loadURL(url.format({
-        pathname: path.join(__dirname, './build/index.html'),
-        protocol: 'file',
-        slashes: true
-    }))
+    //appWindow.loadURL(url.format({
+    //    pathname: path.join(__dirname, './build/index.html'),
+    //    protocol: 'file',
+    //    slashes: true
+    //}))
 
     ipcMain.on('open-dir-dialog', (event, arg) => {
         const dir = dialog.showOpenDialogSync({
@@ -174,6 +176,24 @@ function createWindow() {
             event.sender.send('throw-error', 'Algo de errado não está certo!')
             event.sender.send('throw-error', 'Verifique o diretório informado.')
         }   
+    })
+
+    ipcMain.on('screen-capture', (event, {path, timeLimit, type}) => {
+        try {
+            const data = getDate()
+            if(type==='recorder') {
+                const fileName = `video_${data}.mp4`
+                const command = `adb exec-out screenrecord --time-limit=${timeLimit} /sdcard/HDT-video.mp4 && adb pull /sdcard/HDT-video.mp4 ${path}/${fileName}`
+                screenCapture({event, command, type})
+            }
+            else if(type==='screenshot') {
+                const fileName = `Screenshot_${data}.png`
+                const command = `adb exec-out screencap -p > ${path}/${fileName}`
+                screenCapture({event, command, type})
+            }
+        } catch(error) {
+            event.sender.send('throw-error', 'Algo de errado não está certo!')
+        }
     })
 
     appWindow.on('closed', () => appWindow = null)
