@@ -73,8 +73,8 @@ Abra o terminal na pasta de destino da aplicação e execute o comando: \
 
 <hr style="border:2px solid gray"> </hr>
 
-### DOWNLOAD (v0.1.0)
+### DOWNLOAD (v0.3.1)
 
-- Windows   [Google Drive](https://drive.google.com/file/d/1F9LGND_J2oUKIIOxlQx0zSlf0-oL-6CG/view?usp=sharing)
+- Windows   [Google Drive](https://drive.google.com/file/d/1qCLiF7MWEimH-ZHzjUUe6DyFbVoWccua/view?usp=sharing)
 - Linux     [Google Drive](https://drive.google.com/file/d/1SAIEZ9XLW33IGVcAHzNRpdGptjtrlDUs/view?usp=sharing)
 - MacOS     [Google Drive]()
