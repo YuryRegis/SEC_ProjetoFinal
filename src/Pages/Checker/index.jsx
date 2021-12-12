@@ -42,10 +42,8 @@ function Checker() {
 
     function checkHashFile() {
         const check = hash === hashInput
-        setIsSuccess(_ => true)
-        if (check) {
+        if (check) 
             return 'HASH VÁLIDA'
-        }
         else 
             return 'OPA! HASH INVÁLIDA'
     }
@@ -54,7 +52,7 @@ function Checker() {
         ResetListeners()
         ipcRenderer.on('encrypted-hash', (_, arg) => setHash(_ => arg))
 
-        ipcRenderer.on('selected-dir', (_, path) => setFilePath(_ => path))
+        ipcRenderer.on('selected-file', (_, path) => setFilePath(_ => path))
 
         ipcRenderer.on('invalid-path', (_, message) => {
             setLoading(_ => false)
