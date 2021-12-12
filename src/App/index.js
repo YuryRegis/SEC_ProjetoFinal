@@ -1,10 +1,13 @@
-import React, {useState} from 'react'
 import * as Styled from './style'
+import React, {useState} from 'react'
 import MenuButton from '../Components/MenuButton'
-import Generator from '../Pages/Generator'
+
 import Checker from '../Pages/Checker'
 import Android from '../Pages/Android'
+import Generator from '../Pages/Generator'
 import HdtChecker from '../Pages/HdtChecker'
+import ScreenCapture from '../Pages/ScreenCapture'
+
 
 
 function handlePage(page) {
@@ -17,6 +20,8 @@ function handlePage(page) {
       return (<Android />)
     case 'hdt-checker':
       return (<HdtChecker />)
+    case 'screen-capture':
+      return (<ScreenCapture />)
   }
 }
 
@@ -33,10 +38,14 @@ function App() {
      
      <Styled.Menu>
         <Styled.ButtonContainer>
-          <MenuButton onClick={()=>handleButtonClick('generator')}>Gerar hash</MenuButton>
-          <MenuButton onClick={()=>handleButtonClick('checker')}>Comparar hash</MenuButton>
-          <MenuButton onClick={()=>handleButtonClick('hdt-checker')}>Comparador HDT</MenuButton>
+          <Styled.Divider />
+          <MenuButton onClick={()=>handleButtonClick('generator')}>Gerar HASH</MenuButton>
+          <MenuButton onClick={()=>handleButtonClick('checker')}>Comparar HASH</MenuButton>
+          <MenuButton onClick={()=>handleButtonClick('hdt-checker')}>Verificador HDT</MenuButton>
+          <Styled.Divider />
           <MenuButton onClick={()=>handleButtonClick('android')}>Android tools</MenuButton>
+          <MenuButton onClick={()=>handleButtonClick('screen-capture')}>Captura de tela</MenuButton>
+          <Styled.Divider />
         </Styled.ButtonContainer>
      </Styled.Menu>
      
