@@ -11,7 +11,7 @@ export const InputContainer = styled.div`
 
 export const Input = styled.input`
     height: ${innerHeight/19}px;
-    width: 44vw;
+    width: ${({width}) => width ? `${width}vw` : `44vw`};
 
     border-radius: 9px;
     background-color: ${theme.color.input.background};

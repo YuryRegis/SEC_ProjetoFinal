@@ -2,7 +2,7 @@ import React from 'react'
 import * as Styled from './style'
 
 
-function Input({label, placeholder, onChange, value}) {
+function Input({label, placeholder, onChange, value, width}) {
     
     return (
         <Styled.InputContainer>
@@ -13,6 +13,7 @@ function Input({label, placeholder, onChange, value}) {
                 placeholder={placeholder}
                 onChange={onChange}
                 value={value}
+                width={width}
             />
             
         </Styled.InputContainer>
