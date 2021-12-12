@@ -29,3 +29,11 @@ export const Content = styled.div`
 export const ButtonContainer = styled.div`
     padding: 16px 4px;
 `
+
+export const Divider = styled.div`
+    border-color: #666666;
+    border-style: dashed;
+    border-width: 0 0 2px 0;
+
+    margin: 0 0 10px 0;
+`
