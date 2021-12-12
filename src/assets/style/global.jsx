@@ -30,11 +30,11 @@ export const theme = {
         menuButton: {
             background: {
                 primary: '#282b30',
-                secondary: ''
+                secondary: '#666666'
             },
             text: {
                 primary: '#c9c9c9',
-                secondary: ''
+                secondary: '#e9e9e9'
             },
             border: {
                 primary: '#c9c9c9',

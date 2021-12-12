@@ -20,6 +20,11 @@ export const Button = styled.button`
     align-items: center;
 
     background-color: ${theme.color.menuButton.background.primary};
+
+    &:hover {
+        cursor: pointer;
+        background-color: ${theme.color.menuButton.background.secondary}
+    }
 `
 
 export const Text = styled.text`
@@ -30,4 +35,8 @@ export const Text = styled.text`
         ? theme.color.menuButton.text.primary
         : theme.color.menuButton.text.secondary
     };
+   
+   ${Button}:hover &{
+        color: ${theme.color.menuButton.text.secondary}
+   }
 `
